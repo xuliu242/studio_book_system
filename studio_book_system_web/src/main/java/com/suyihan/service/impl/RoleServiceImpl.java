@@ -1,8 +1,8 @@
 package com.suyihan.service.impl;
 
-import com.suyihan.entity.User;
-import com.suyihan.mapper.UserMapper;
-import com.suyihan.service.UserService;
+import com.suyihan.entity.Role;
+import com.suyihan.mapper.RoleMapper;
+import com.suyihan.service.RoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2021-04-13
  */
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
 
 }

@@ -1,6 +1,6 @@
 package com.suyihan.service;
 
-import com.suyihan.entity.User;
+import com.suyihan.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author Suyihan
  * @since 2021-04-13
  */
-public interface UserService extends IService<User> {
+public interface RoleService extends IService<Role> {
 
 }

@@ -1,6 +1,6 @@
 package com.suyihan.mapper;
 
-import com.suyihan.entity.User;
+import com.suyihan.entity.Role;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author Suyihan
  * @since 2021-04-13
  */
-public interface UserMapper extends BaseMapper<User> {
+public interface RoleMapper extends BaseMapper<Role> {
 
 }

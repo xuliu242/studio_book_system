@@ -60,10 +60,10 @@ public class CodeGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/kaoqin?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8");
+        dsc.setUrl("jdbc:mysql://123.56.235.185:3306/studio-book-system?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("root");
+        dsc.setPassword("liuxu123456");
         //使用mysql数据库
         dsc.setDbType(DbType.MYSQL);
         mpg.setDataSource(dsc);
@@ -97,7 +97,7 @@ public class CodeGenerator {
         //驼峰转连字符
         strategy.setControllerMappingHyphenStyle(true);
         //忽略表中生成实体类的前缀
-        strategy.setTablePrefix("lx_");
+        strategy.setTablePrefix("syh_");
         mpg.setStrategy(strategy);
         mpg.execute();
     }
