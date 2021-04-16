@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.suyihan.mapper.RoleMenuMapper">
+    <resultMap id="BaseResultMap" type="com.suyihan.entity.RoleMenu">
+        <id column="syh_role_menu_id" jdbcType="BIGINT" property="syhRoleMenuId" />
+        <result column="syh_role_id" jdbcType="BIGINT" property="syhRoleId" />
+        <result column="syh_menu_id" jdbcType="BIGINT" property="syhMenuId" />
+    </resultMap>
+    <insert id="insertRoleMenu" parameterType="com.suyihan.entity.RoleMenu">
+        insert into syh_role_menu (syh_role_menu_id, syh_role_id, syh_menu_id
+        )
+        values (#{syhRoleMenuId,jdbcType=BIGINT}, #{syhRoleId,jdbcType=BIGINT}, #{syhMenuId,jdbcType=BIGINT}
+               )
+    </insert>
+</mapper>

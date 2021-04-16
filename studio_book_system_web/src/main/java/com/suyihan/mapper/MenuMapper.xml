@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.suyihan.mapper.MenuMapper">
+    <resultMap id="BaseResultMap" type="com.suyihan.entity.Menu">
+        <id column="syh_menu_id" jdbcType="BIGINT" property="syhMenuId" />
+        <result column="syh_menu_name" jdbcType="VARCHAR" property="syhMenuName" />
+        <result column="syh_menu_type" jdbcType="VARCHAR" property="syhMenuType" />
+        <result column="syh_menu_parent_id" jdbcType="BIGINT" property="syhMenuParentId" />
+        <result column="syh_menu_status" jdbcType="TINYINT" property="syhMenuStatus" />
+        <result column="syh_menu_url" jdbcType="VARCHAR" property="syhMenuUrl" />
+        <result column="syh_menu_opcode" jdbcType="VARCHAR" property="syhMenuOpcode" />
+        <result column="syh_menu_detail" jdbcType="VARCHAR" property="syhMenuDetail" />
+        <result column="syh_menu_queue" jdbcType="INTEGER" property="syhMenuQueue" />
+    </resultMap>
+    <insert id="insertMenu" parameterType="com.suyihan.entity.Menu">
+        insert into syh_menu (syh_menu_id, syh_menu_name, syh_menu_type,
+                              syh_menu_parent_id, syh_menu_status, syh_menu_url,
+                              syh_menu_opcode, syh_menu_detail, syh_menu_queue
+        )
+        values (#{syhMenuId,jdbcType=BIGINT}, #{syhMenuName,jdbcType=VARCHAR}, #{syhMenuType,jdbcType=VARCHAR},
+                #{syhMenuParentId,jdbcType=BIGINT}, #{syhMenuStatus,jdbcType=TINYINT}, #{syhMenuUrl,jdbcType=VARCHAR},
+                #{syhMenuOpcode,jdbcType=VARCHAR}, #{syhMenuDetail,jdbcType=VARCHAR}, #{syhMenuQueue,jdbcType=INTEGER}
+               )
+    </insert>
+    <update id="updateMenuById" parameterType="com.suyihan.entity.Menu">
+        update syh_menu
+        set syh_menu_name = #{syhMenuName,jdbcType=VARCHAR},
+            syh_menu_type = #{syhMenuType,jdbcType=VARCHAR},
+            syh_menu_parent_id = #{syhMenuParentId,jdbcType=BIGINT},
+            syh_menu_status = #{syhMenuStatus,jdbcType=TINYINT},
+            syh_menu_url = #{syhMenuUrl,jdbcType=VARCHAR},
+            syh_menu_opcode = #{syhMenuOpcode,jdbcType=VARCHAR},
+            syh_menu_detail = #{syhMenuDetail,jdbcType=VARCHAR},
+            syh_menu_queue = #{syhMenuQueue,jdbcType=INTEGER}
+        where syh_menu_id = #{syhMenuId,jdbcType=BIGINT}
+    </update>
+    <select id="selectMenuByCondition" parameterType="com.suyihan.entity.QueryMenuCondition" resultMap="BaseResultMap">
+        select * from syh_menu where 1=1
+        <if test="menuName!=null and menuName!=''">
+            and syh_menu_name like concat('%',concat(#{menuName},'%'))
+        </if>
+        <if test="menuStatus!=null and menuStatus!=''">
+            and syh_menu_status = #{menuStatus}
+        </if>
+        <if test="sort!=null">
+
+        </if>
+        ORDER BY  syh_menu_queue
+
+    </select>
+
+</mapper>

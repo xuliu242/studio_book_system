@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.suyihan.mapper.UserRoleMapper">
+    <resultMap id="BaseResultMap" type="com.suyihan.entity.UserRole">
+        <id column="syh_user_role_id" jdbcType="BIGINT" property="syhUserRoleId" />
+        <result column="syh_user_id" jdbcType="BIGINT" property="syhUserId" />
+        <result column="syh_role_id" jdbcType="BIGINT" property="syhRoleId" />
+    </resultMap>
+    <insert id="insertUserRole" parameterType="com.suyihan.entity.UserRole">
+        insert into syh_user_role (syh_user_role_id, syh_user_id, syh_role_id
+        )
+        values (#{syhUserRoleId,jdbcType=BIGINT}, #{syhUserId,jdbcType=BIGINT}, #{syhRoleId,jdbcType=BIGINT}
+               )
+    </insert>
+    <update id="updateUserRoleById" parameterType="com.suyihan.entity.UserRole">
+        update syh_user_role
+        set syh_user_id = #{syhUserId,jdbcType=BIGINT},
+            syh_role_id = #{syhRoleId,jdbcType=BIGINT}
+        where syh_user_role_id = #{syhUserRoleId,jdbcType=BIGINT}
+    </update>
+    <select id="selectUserRoleByCondition" parameterType="com.suyihan.entity.QueryUserRoleCondition" resultMap="BaseResultMap">
+        select ur.USER_ROLE_ID,ur.USER_LOGIN_NAME,ur.ROLE_ID,r.ROLE_NAME,ur.USER_ID,u.USER_NAME
+        from TB_USER_ROLE ur
+        LEFT JOIN TB_ROLE r on ur.ROLE_ID=r.ROLE_ID
+        LEFT JOIN TB_USER u on ur.USER_ID=u.USER_ID
+        where 1=1
+        <if test="userRoleId!=null">
+            and USER_ROLE_ID = #{userRoleId}
+        </if>
+        <if test="userLoginName!=null">
+            and USER_LOGIN_NAME = #{userLoginName,jdbcType=VARCHAR}
+        </if>
+
+
+    </select>
+</mapper>

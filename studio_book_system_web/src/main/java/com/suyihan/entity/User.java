@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author Suyihan
- * @since 2021-04-13
+ * @since 2021-04-16
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -49,10 +49,10 @@ public class User implements Serializable {
     private Integer syhSex;
 
     @ApiModelProperty(value = "注册时间")
-    private Date syhRegistTime;
+    private Date syhRegisterTime;
 
-    @ApiModelProperty(value = "角色")
-    private Long syhRoleId;
+    @ApiModelProperty(value = "状态（1启用，0禁用）")
+    private Integer syhStatus;
 
 
 }

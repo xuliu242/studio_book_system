@@ -1,5 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.suyihan.mapper.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.suyihan.entity.Role">
+        <id column="syh_role_id" jdbcType="INTEGER" property="syhRoleId" />
+        <result column="syh_role_name" jdbcType="VARCHAR" property="syhRoleName" />
+        <result column="syh_role_detail" jdbcType="VARCHAR" property="syhRoleDetail" />
+        <result column="syh_role_status" jdbcType="BIGINT" property="syhRoleStatus" />
+        <result column="syh_role_create_time" jdbcType="TIMESTAMP" property="syhRoleCreateTime" />
+    </resultMap>
+    <insert id="insertRole" parameterType="com.suyihan.entity.Role">
+        insert into syh_role (syh_role_id, syh_role_name, syh_role_detail,
+                              syh_role_status, syh_role_create_time)
+        values (#{syhRoleId,jdbcType=INTEGER}, #{syhRoleName,jdbcType=VARCHAR}, #{syhRoleDetail,jdbcType=VARCHAR},
+                #{syhRoleStatus,jdbcType=BIGINT}, #{syhRoleCreateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <update id="updateRoleById" parameterType="com.suyihan.entity.Role">
+        update syh_role
+        set syh_role_name = #{syhRoleName,jdbcType=VARCHAR},
+            syh_role_detail = #{syhRoleDetail,jdbcType=VARCHAR},
+            syh_role_status = #{syhRoleStatus,jdbcType=BIGINT},
+            syh_role_create_time = #{syhRoleCreateTime,jdbcType=TIMESTAMP}
+        where syh_role_id = #{syhRoleId,jdbcType=INTEGER}
+    </update>
+    <select id="selectRoleByCondition" parameterType="com.suyihan.entity.QueryRoleCondition" resultMap="BaseResultMap">
+        select * from syh_role where 1=1
+        <if test="roleName!=null and roleName!=''">
+            and syh_role_name like concat('%',concat(#{roleName},'%'))
+        </if>
+        <if test="roleCreateTime!=null">
+            and syh_role_create_time between #{roleCreateTime} and #{roleStopTime}
+        </if>
+        order by syh_role_id
+
+
+    </select>
 
 </mapper>
