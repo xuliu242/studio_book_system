@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author Suyihan
- * @since 2021-04-13
+ * @since 2021-04-18
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -37,7 +37,7 @@ public class Classroom implements Serializable {
     @ApiModelProperty(value = "简介")
     private String syhClassroomInfo;
 
-    @ApiModelProperty(value = "教师类型：大教室，小教室，中型教室")
+    @ApiModelProperty(value = "教室类型：大教室，小教室，中型教室")
     private String syhClassroomType;
 
     @ApiModelProperty(value = "教室工位数量")
