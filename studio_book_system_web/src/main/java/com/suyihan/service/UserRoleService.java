@@ -21,9 +21,9 @@ public interface UserRoleService extends IService<UserRole> {
     UserRole selectuserRoleByuserRoleName();    //通过用户所属角色名查询用户所属角色信息
     int insertuserRole(UserRole userRole);
     int updateuserRoleById(UserRole userRole);
-    int deleteuserRoleById(Integer userRoleId);
+    int deleteuserRoleById(Long userRoleId);
     List<UserRole> selectByQueryUserRoleCondition(QueryUserRoleCondition qurc);
-    List<Integer> selectRoleIds(Integer userId);    //根据用户id查询角色ids
-    Boolean doAssignRoles(Integer userId,Integer[] roleIds);
-    List<Role> selectRolesByUserId(Integer userId);
+    List<Long> selectRoleIds(Long userId);    //根据用户id查询角色ids
+    Boolean doAssignRoles(Long userId,Long[] roleIds);
+    List<Role> selectRolesByUserId(Long userId);
 }

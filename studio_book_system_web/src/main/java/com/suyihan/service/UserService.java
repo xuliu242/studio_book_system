@@ -21,17 +21,17 @@ public interface UserService extends IService<User> {
     // 查询所有用户信息
     List<User> selectAll();
     // 根据用户ID查询用户信息
-    User selectByUserId(Integer userId);
+    User selectByUserId(Long userId);
     // 通过用户名查询用户信息
     User selectUserByLoginName(String userLoginName);
     // 添加用户数据
     int insertUser(User user);
     // 根据用户ID删除用户信息
-    int deleteUserById(Integer userId);
+    int deleteUserById(Long userId);
     // 根据用户ID更新用户信息
     int updateUserById(User user);
     // 根据用户ID更新用户状态
-    int updateUserStatusById(Integer userId,String userStatus);
+    int updateUserStatusById(Long userId,String userStatus);
     // 条件查询
     List<User> selectUserByCondition(QueryUserCondition queryUserCondition);
 }
