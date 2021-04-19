@@ -23,7 +23,7 @@ public interface UserService extends IService<User> {
     // 根据用户ID查询用户信息
     User selectByUserId(Long userId);
     // 通过用户名查询用户信息
-    User selectUserByLoginName(String userLoginName);
+    User selectUserByLoginName(Integer userLoginName);
     // 添加用户数据
     int insertUser(User user);
     // 根据用户ID删除用户信息
@@ -31,7 +31,7 @@ public interface UserService extends IService<User> {
     // 根据用户ID更新用户信息
     int updateUserById(User user);
     // 根据用户ID更新用户状态
-    int updateUserStatusById(Long userId,String userStatus);
+    int updateUserStatusById(Long userId,Integer userStatus);
     // 条件查询
     List<User> selectUserByCondition(QueryUserCondition queryUserCondition);
 }

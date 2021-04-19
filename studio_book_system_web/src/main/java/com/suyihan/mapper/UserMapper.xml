@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.suyihan.mapper.UserMapper">
-    <resultMap id="BaseResultMap" type="com.example.entity.SyhUser">
+    <resultMap id="BaseResultMap" type="com.suyihan.entity.User">
         <id column="syh_user_id" jdbcType="BIGINT" property="syhUserId" />
         <result column="syh_user_number" jdbcType="INTEGER" property="syhUserNumber" />
         <result column="syh_user_name" jdbcType="VARCHAR" property="syhUserName" />
@@ -21,12 +21,12 @@
         from syh_user
         where syh_user_id = #{userId,jdbcType=INTEGER}
     </select>
-<!--    <select id="selectUserByLoginName" resultMap="BaseResultMap" parameterType="java.lang.String">-->
-<!--        select *-->
-<!--        from syh_user-->
-<!--        where USER_LOGIN_NAME = #{userLoginName,jdbcType=VARCHAR}-->
-<!--    </select>-->
-    <insert id="insertUser" parameterType="com.urms.entity.User">
+    <select id="selectUserByLoginName" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select *
+        from syh_user
+        where syh_user_number = #{userLoginName,jdbcType=VARCHAR}
+    </select>
+    <insert id="insertUser" parameterType="com.suyihan.entity.User">
         insert into syh_user (syh_user_id, syh_user_number, syh_user_name,
                               syh_password, syh_phone, syh_email,
                               syh_sex, syh_register_time, syh_status
