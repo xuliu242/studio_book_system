@@ -91,8 +91,22 @@ public class UserController {
     @ResponseBody
 //    @RequiresPermissions("user:select")
     public Result selectAll() {
-        PageHelper.startPage(1,4);
+        PageHelper.startPage(1,10);
 //        List<User> userList = userService.selectAll();
+//        for (int i = 0; i < 30; i++) {
+//            User user=new User();
+//            user.setSyhUserNumber(1740110500+i);
+//            user.setSyhPassword("123456");
+//            user.setSyhRegisterTime(new Date());
+//            user.setSyhSex(i%2==0?1:0);
+//            user.setSyhUserName("user"+(i+1));
+//            user.setSyhPhone("135123400"+(i>10?"0"+i:i));
+//            user.setSyhStatus(i%3==0?1:0);
+//            user.setSyhEmail("1351234000"+i+"@qq.com");
+//            int insertUser = userService.insertUser(user);
+//            if (insertUser<=0)
+//                return Result.ok();
+//        }
         PageInfo pageInfo=new PageInfo(userService.selectAll());
         return Result.ok().data("userList", pageInfo.getList()).data("total",pageInfo.getTotal());
     }
