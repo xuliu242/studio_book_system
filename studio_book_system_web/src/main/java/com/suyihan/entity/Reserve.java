@@ -1,5 +1,6 @@
 package com.suyihan.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
@@ -41,8 +42,24 @@ public class Reserve implements Serializable {
     @ApiModelProperty(value = "结束时间")
     private Date syhReserveEndTime;
 
-    @ApiModelProperty(value = "预定结果（1成功，0失败）")
+    @ApiModelProperty(value = "预定结果（1成功，0失败、2已结束）")
     private Integer syhReserveStatus;
+    /**
+     * 用户名
+     */
+    @TableField(exist = false)
+    private String syhUserName;
+    /**
+     * 教室编号
+     */
+    @TableField(exist = false)
+    private String syhClassroomNumber;
+    /**
+     * 座位名
+     */
+    @TableField(exist = false)
+    private String syhSitName;
+
 
 
 }

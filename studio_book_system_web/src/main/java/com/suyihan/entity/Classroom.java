@@ -1,5 +1,6 @@
 package com.suyihan.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -42,6 +43,11 @@ public class Classroom implements Serializable {
 
     @ApiModelProperty(value = "教室工位数量")
     private Integer syhClassroomSitNumber;
+    /**
+     * 可预订座位数量
+     */
+    @TableField(exist = false)
+    private  Integer reserveAbleSitNum;
 
 
 }
