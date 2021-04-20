@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class ClassroomController {
      * @return
      */
     @ApiOperation(value = "saveOrUpdateClassroom")
-    @RequestMapping("/saveOrUpdateClassroom")
+    @RequestMapping(value = "/saveOrUpdateClassroom",method = RequestMethod.POST)
     public Result addClassroom(@RequestBody Classroom classroom){
         boolean b = classroomService.saveOrUpdate(classroom);
         if (b){
@@ -54,7 +55,7 @@ public class ClassroomController {
      * @return
      */
     @ApiOperation(value = "deleteClassroom")
-    @RequestMapping("/deleteClassroom")
+    @RequestMapping(value = "/deleteClassroom",method = RequestMethod.GET)
     public Result deleteClassroom(Long classroomId){
         boolean b = classroomService.removeById(classroomId);
         if (b){
@@ -69,7 +70,7 @@ public class ClassroomController {
      * @return
      */
     @ApiOperation(value = "条件查询classroom")
-    @RequestMapping("/queryClassroomCondition")
+    @RequestMapping(value = "/queryClassroomCondition",method = RequestMethod.POST)
     public Result queryClassroomCondition(@RequestBody Map<String,Object> map){
         boolean updateClassroomSitNum = classroomService.updateClassroomSitNum();
         if (!updateClassroomSitNum){
@@ -92,6 +93,17 @@ public class ClassroomController {
         return Result.ok().data("result",classroomList).data("total",total);
     }
 
+    /**
+     * 查询教室可用座位数量
+     * @return
+     */
+    @ApiOperation(value = "查询教室可用座位数量")
+    @RequestMapping(value = "/queryClassroomAbleSits",method = RequestMethod.POST)
+    public Result queryClassroomAbleSits(){
+        List<Classroom> classroomList = classroomService.queryClassroomAbleSits();
+
+        return Result.ok().data("result",classroomList);
+    }
 
 
 }

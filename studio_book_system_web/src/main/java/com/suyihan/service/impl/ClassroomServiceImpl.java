@@ -52,4 +52,20 @@ public class ClassroomServiceImpl extends ServiceImpl<ClassroomMapper, Classroom
 
         return true;
     }
+
+    /**
+     * 查询教室可用座位数量
+     * @return 
+     */
+    @Override
+    public List<Classroom> queryClassroomAbleSits() {
+        List<Classroom> classroomList = classroomMapper.selectList(null);
+        for (Classroom classroom:classroomList) {
+            Long syhClassroomId = classroom.getSyhClassroomId();
+            Integer ableSits = classsitMapper.queryClasssitAbleSits(syhClassroomId);
+            classroom.setReserveAbleSitNum(ableSits);
+
+        }
+        return classroomList;
+    }
 }

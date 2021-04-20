@@ -1,6 +1,8 @@
 package com.suyihan.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.suyihan.entity.Classroom;
 import com.suyihan.entity.Classsit;
 import com.suyihan.response.Result;
 import com.suyihan.service.ClassroomService;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -49,6 +52,22 @@ public class ClasssitController {
         }
         return Result.error();
     }
+
+    /**
+     * 根据教室id查询座位信息
+     * @param classroomId
+     * @return
+     */
+    @ApiOperation(value = "根据教室id查询座位信息")
+    @RequestMapping(value = "/queryByClassroomId",method = RequestMethod.GET)
+    public Result queryByClassroomId(Long classroomId){
+        QueryWrapper<Classsit> wrapper=new QueryWrapper();
+        wrapper.eq("syh_classroom_id",classroomId);
+        List<Classsit> classsitList = classsitService.list(wrapper);
+
+        return Result.ok().data("result",classsitList);
+    }
+
 
 //    @ApiOperation(value = "initClasssit")
 //    @RequestMapping(value = "/initClasssit",method = RequestMethod.GET)
