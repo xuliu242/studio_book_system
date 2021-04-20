@@ -29,6 +29,7 @@ public class ClassroomServiceImpl extends ServiceImpl<ClassroomMapper, Classroom
     private ClasssitMapper classsitMapper;
     @Override
     public boolean updateClassroomSitNum() {
+
 //        QueryWrapper<Classroom> classroomQueryWrapper=new QueryWrapper<>();
         List<Classroom> classroomList = classroomMapper.selectList(null);
         for (Classroom classroom:classroomList) {
