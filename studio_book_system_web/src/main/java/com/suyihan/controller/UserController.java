@@ -194,6 +194,22 @@ public class UserController {
         }
         return Result.ok();
     }
-
+    //    根据用户ID更新用户信息/移动端
+    @RequestMapping("/mUpdateUserById")
+    @ResponseBody
+    public Result mUpdateUserById(@RequestBody User user) {
+        User userServiceById = userService.getById(user.getSyhUserId());
+        user.setSyhUserNumber(userServiceById.getSyhUserNumber());
+        user.setSyhPassword(userServiceById.getSyhPassword());
+        user.setSyhRegisterTime(userServiceById.getSyhRegisterTime());
+        if (user.getSyhSex()==2){
+            user.setSyhSex(0);
+        }
+        int i = userService.updateUserById(user);
+        if (i>0){
+            return Result.ok();
+        }
+        return Result.error();
+    }
 }
 

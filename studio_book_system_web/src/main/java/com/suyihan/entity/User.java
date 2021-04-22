@@ -31,7 +31,7 @@ public class User implements Serializable {
     private Long syhUserId;
 
     @ApiModelProperty(value = "账号")
-    private Integer syhUserNumber;
+        private Integer syhUserNumber;
 
     @ApiModelProperty(value = "姓名")
     private String syhUserName;

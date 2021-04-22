@@ -128,8 +128,12 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.4.2</version>
+                <configuration>
+                    <mainClass>com.suyihan.StudioBookSystemApplication</mainClass>
+                </configuration>
             </plugin>
         </plugins>
+
         <!-- 如果不添加此节点mybatis的mapper.xml文件都会被漏掉。 -->
         <resources>
             <resource>
