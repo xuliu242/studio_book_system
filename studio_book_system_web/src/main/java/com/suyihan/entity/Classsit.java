@@ -1,5 +1,6 @@
 package com.suyihan.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
@@ -40,6 +41,22 @@ public class Classsit implements Serializable {
 
     @ApiModelProperty(value = "添加时间")
     private Date syhSitUpdateTime;
+
+    @ApiModelProperty(value = "行数")
+    @TableField(exist = false)
+    private Integer rowNum;
+
+    @ApiModelProperty(value = "列数")
+    @TableField(exist = false)
+    private Integer columnNum;
+
+    @ApiModelProperty(value = "纵坐标")
+    @TableField(exist = false)
+    private Integer yCoord;
+
+    @ApiModelProperty(value = "横坐标")
+    @TableField(exist = false)
+    private Integer xCoord;
 
 
 }

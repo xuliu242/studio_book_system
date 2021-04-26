@@ -64,6 +64,22 @@ public class ClasssitController {
         QueryWrapper<Classsit> wrapper=new QueryWrapper();
         wrapper.eq("syh_classroom_id",classroomId);
         List<Classsit> classsitList = classsitService.list(wrapper);
+        //处理座位位置数据
+        for (Classsit classsit:classsitList) {
+            String syhSitName = classsit.getSyhSitName();
+            //行
+            int rowNum = Integer.parseInt(syhSitName.substring(syhSitName.length()-2,syhSitName.length() -1)) + 1;
+            //列
+            int columnNum = Integer.parseInt(syhSitName.substring(syhSitName.length()-1, syhSitName.length()));
+            if (columnNum==0){
+                columnNum=10;
+            }
+            classsit.setRowNum(rowNum);
+            classsit.setColumnNum(columnNum);
+            classsit.setXCoord(20-columnNum-1);
+            classsit.setYCoord(rowNum+2);
+        }
+
 
         return Result.ok().data("result",classsitList);
     }

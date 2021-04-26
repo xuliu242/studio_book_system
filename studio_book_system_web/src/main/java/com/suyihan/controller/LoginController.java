@@ -29,6 +29,8 @@ public class LoginController {
             throw new BusinessException(ResultCode.USER_NOT_FOUND_EXCEPTION.getCode(),
                     ResultCode.USER_NOT_FOUND_EXCEPTION.getMessage());
         }
+
+        // 验证密码逻辑1
         String md5Encryption = MD5Utils.md5Encryption(user.getSyhPassword(), loginUser.getSyhUserName());
         String substring = md5Encryption.substring(8, 24);
         if(!loginUser.getSyhPassword().equals(substring)){
