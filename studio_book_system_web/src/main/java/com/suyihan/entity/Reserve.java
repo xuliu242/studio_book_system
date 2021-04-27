@@ -6,10 +6,14 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * <p>
@@ -37,9 +41,12 @@ public class Reserve implements Serializable {
     private Long syhSitId;
 
     @ApiModelProperty(value = "开始时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date syhReserveStartTime;
 
     @ApiModelProperty(value = "结束时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private Date syhReserveEndTime;
 
     @ApiModelProperty(value = "预定结果（1成功，0失败、2已结束）")
@@ -60,6 +67,7 @@ public class Reserve implements Serializable {
     @TableField(exist = false)
     private String syhSitName;
 
-
+    @TableField(exist = false)
+    private List<Long> syhSitIds;
 
 }

@@ -1,15 +1,23 @@
 package com.suyihan.controller;
 
 
+import com.suyihan.entity.Reserve;
 import com.suyihan.response.Result;
 import com.suyihan.service.ReserveService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -27,7 +35,33 @@ public class ReserveController {
     private ReserveService reserveService;
     @ApiOperation(value = "新增预订信息信息")
     @RequestMapping(value = "/addReserve",method = RequestMethod.POST)
-    public Result addReserve(){
+    public Result addReserve(@RequestBody Map<String,Object> map) throws ParseException {
+
+        Integer valueId = (Integer) map.get("syhUserId");
+        long syhUserId = valueId.longValue();
+        String endTime = (String) map.get("syhReserveEndTime");
+        ;
+        int t = endTime.indexOf("T");
+        String substring1 = endTime.substring(0, t);
+        String substring2 = endTime.substring(t + 1, endTime.indexOf("."));
+        endTime=substring1+" "+substring2;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");;
+        Date syhReserveEndTime=format.parse(endTime);
+        Date startTime = new Date();
+        if (startTime.getTime()>syhReserveEndTime.getTime()){
+            return Result.error().message("时间选择错误");
+        }
+        List<Long> sitIdList = (List<Long>) map.get("syhSitIds");
+        for (int i = 0; i < sitIdList.size(); i++) {
+            //判断当前座位id是否被占用
+            Reserve reserve=new Reserve();
+            reserve.setSyhReserveStartTime(startTime);
+            reserve.setSyhUserId(syhUserId);
+            reserve.setSyhReserveEndTime(syhReserveEndTime);
+
+        }
+
+//        reserve.toString();
         return Result.error();
     }
     @ApiOperation(value = "查询预订信息信息")

@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * <p>
@@ -49,6 +50,7 @@ public class User implements Serializable {
     private Integer syhSex;
 
     @ApiModelProperty(value = "注册时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date syhRegisterTime;
 
     @ApiModelProperty(value = "状态（1启用，0禁用）")
