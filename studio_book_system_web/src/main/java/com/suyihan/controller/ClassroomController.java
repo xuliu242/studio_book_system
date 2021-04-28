@@ -100,7 +100,11 @@ public class ClassroomController {
     @ApiOperation(value = "查询教室可用座位数量")
     @RequestMapping(value = "/queryClassroomAbleSits",method = RequestMethod.POST)
     public Result queryClassroomAbleSits(){
+
         List<Classroom> classroomList = classroomService.queryClassroomAbleSits();
+        if (classroomList==null){
+            return Result.error();
+        }
 
         return Result.ok().data("result",classroomList);
     }

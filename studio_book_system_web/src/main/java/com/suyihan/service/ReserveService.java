@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-04-18
  */
 public interface ReserveService extends IService<Reserve> {
-
+    int addReserve(Reserve reserve);
 }

@@ -36,7 +36,7 @@ public class Classsit implements Serializable {
     @ApiModelProperty(value = "工位名称")
     private String syhSitName;
 
-    @ApiModelProperty(value = "预定状态(1可用，0不可用)")
+    @ApiModelProperty(value = "预定状态(0可用，1不可用)")
     private Integer syhSitStatus;
 
     @ApiModelProperty(value = "添加时间")

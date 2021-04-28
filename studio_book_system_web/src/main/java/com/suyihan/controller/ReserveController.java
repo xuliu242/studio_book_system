@@ -33,14 +33,19 @@ import java.util.Map;
 public class ReserveController {
     @Autowired
     private ReserveService reserveService;
+
+    /**
+     * 新增预订信息信息
+     * @param map
+     * @return
+     * @throws ParseException
+     */
     @ApiOperation(value = "新增预订信息信息")
     @RequestMapping(value = "/addReserve",method = RequestMethod.POST)
     public Result addReserve(@RequestBody Map<String,Object> map) throws ParseException {
-
         Integer valueId = (Integer) map.get("syhUserId");
         long syhUserId = valueId.longValue();
         String endTime = (String) map.get("syhReserveEndTime");
-        ;
         int t = endTime.indexOf("T");
         String substring1 = endTime.substring(0, t);
         String substring2 = endTime.substring(t + 1, endTime.indexOf("."));
@@ -58,11 +63,13 @@ public class ReserveController {
             reserve.setSyhReserveStartTime(startTime);
             reserve.setSyhUserId(syhUserId);
             reserve.setSyhReserveEndTime(syhReserveEndTime);
-
+            reserve.setSyhReserveStatus(1);
+            int addReserve = reserveService.addReserve(reserve);
+            if (addReserve<=0){
+                return Result.error();
+            }
         }
-
-//        reserve.toString();
-        return Result.error();
+        return Result.ok();
     }
     @ApiOperation(value = "查询预订信息信息")
     @RequestMapping(value = "/queryReserve",method = RequestMethod.GET)

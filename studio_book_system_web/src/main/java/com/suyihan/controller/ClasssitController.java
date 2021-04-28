@@ -32,6 +32,8 @@ import java.util.List;
 public class ClasssitController {
     @Autowired
     private ClasssitService classsitService;
+    @Autowired
+    private ClassroomService classroomService;
 
     @ApiOperation(value = "saveOrUpdateClasssit")
     @RequestMapping(value = "/saveOrUpdateClasssit",method = RequestMethod.POST)
@@ -61,6 +63,7 @@ public class ClasssitController {
     @ApiOperation(value = "根据教室id查询座位信息")
     @RequestMapping(value = "/queryByClassroomId",method = RequestMethod.GET)
     public Result queryByClassroomId(Long classroomId){
+        classroomService.queryClassroomAbleSits();
         QueryWrapper<Classsit> wrapper=new QueryWrapper();
         wrapper.eq("syh_classroom_id",classroomId);
         List<Classsit> classsitList = classsitService.list(wrapper);
