@@ -25,4 +25,9 @@ public interface ClassroomService extends IService<Classroom> {
      * @return
      */
     public List<Classroom> queryClassroomAbleSits();
+
+    /**
+     * 刷新座位和预订信息状态
+     */
+    public Boolean flushStatus();
 }

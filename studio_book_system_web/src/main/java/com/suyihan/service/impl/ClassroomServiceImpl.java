@@ -26,7 +26,6 @@ import java.util.List;
  */
 @Service
 public class ClassroomServiceImpl extends ServiceImpl<ClassroomMapper, Classroom> implements ClassroomService {
-
     @Autowired
     private ClassroomMapper classroomMapper;
     @Autowired
@@ -59,6 +58,7 @@ public class ClassroomServiceImpl extends ServiceImpl<ClassroomMapper, Classroom
         return true;
     }
 
+
     /**
      * 查询教室可用座位数量
      * 1.查询预订失效的记录
@@ -68,24 +68,6 @@ public class ClassroomServiceImpl extends ServiceImpl<ClassroomMapper, Classroom
      */
     @Override
     public List<Classroom> queryClassroomAbleSits() {
-        // 1.查询预订失效的记录 并更新预订状态为2 过期
-        List<Reserve> reserveList = reserveMapper.queryExpireSitIds();
-        List<Long> expireSitIds=new ArrayList<>();
-        for (int i = 0; i < reserveList.size(); i++) {
-            expireSitIds.add(reserveList.get(i).getSyhSitId());
-            int updateReserveStatusById = reserveMapper.updateReserveStatusById(reserveList.get(i).getSyhReserveId(), 2);
-            if (updateReserveStatusById<=0){
-                return null;
-            }
-        }
-        // 2.查询失效预订的座位id 更新座位状态 为0 可用
-        List<Classsit> classsitList = classsitMapper.selectBatchIds(expireSitIds);
-        for (Classsit classsit:classsitList) {
-            Integer updateSitStatusById = classsitMapper.updateSitStatusById(classsit.getSyhSitId(), 0);
-            if (updateSitStatusById<=0){
-                return null;
-            }
-        }
         // 3.查询更新后的教室信息
         List<Classroom> classroomList = classroomMapper.selectList(null);
         for (Classroom classroom:classroomList) {
@@ -94,5 +76,28 @@ public class ClassroomServiceImpl extends ServiceImpl<ClassroomMapper, Classroom
             classroom.setReserveAbleSitNum(ableSits);
         }
         return classroomList;
+    }
+
+    @Override
+    public Boolean flushStatus() {
+        // 1.查询预订失效的记录 并更新预订状态为2 过期
+        List<Reserve> reserveList = reserveMapper.queryExpireSitIds();
+        List<Long> expireSitIds=new ArrayList<>();
+        for (int i = 0; i < reserveList.size(); i++) {
+            expireSitIds.add(reserveList.get(i).getSyhSitId());
+            int updateReserveStatusById = reserveMapper.updateReserveStatusById(reserveList.get(i).getSyhReserveId(), 2);
+            if (updateReserveStatusById<=0){
+                return false;
+            }
+        }
+        // 2.查询失效预订的座位id 更新座位状态 为0 可用
+        List<Classsit> classsitList = classsitMapper.selectBatchIds(expireSitIds);
+        for (Classsit classsit:classsitList) {
+            Integer updateSitStatusById = classsitMapper.updateSitStatusById(classsit.getSyhSitId(), 0);
+            if (updateSitStatusById<=0){
+                return false;
+            }
+        }
+        return true;
     }
 }

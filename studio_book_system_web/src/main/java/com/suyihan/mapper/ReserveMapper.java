@@ -34,6 +34,20 @@ public interface ReserveMapper extends BaseMapper<Reserve> {
     @Update("update syh_reserve set syh_reserve_status=#{syhReserveStatus} where syh_reserve_id=#{syhReserveId}")
     int updateReserveStatusById(@Param("syhReserveId") Long syhReserveId,@Param("syhReserveStatus") Integer syhReserveStatus);
 
+    List<Reserve> queryReserveCondition();
 
+    /**
+     * 根据用户id查询预定信息
+     * @param syhUserId
+     * @return
+     */
+    @Select("select rs.syh_reserve_id,rs.syh_user_id,rs.syh_sit_id,rs.syh_reserve_start_time,\n" +
+            "rs.syh_reserve_end_time,rs.syh_reserve_status,u.syh_user_name,room.syh_classroom_number,\n" +
+            "sit.syh_sit_name from syh_reserve rs\n" +
+            "left join syh_user u on u.syh_user_id=rs.syh_user_id\n" +
+            "left join syh_classsit sit on sit.syh_sit_id=rs.syh_sit_id\n" +
+            "left join syh_classroom room on room.syh_classroom_id=sit.syh_classroom_id\n" +
+            "where rs.syh_user_id=#{syhUserId};\n")
+    List<Reserve> queryReserveByUserId(Long syhUserId);
 
 }

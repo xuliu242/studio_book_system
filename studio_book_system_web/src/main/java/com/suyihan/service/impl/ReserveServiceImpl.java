@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -31,5 +33,15 @@ public class ReserveServiceImpl extends ServiceImpl<ReserveMapper, Reserve> impl
             return 0;
         }
         return reserveMapper.insert(reserve);
+    }
+
+    /**
+     * 根据用户id查询预订信息信息
+     * @param syhUserId
+     * @return
+     */
+    @Override
+    public List<Reserve> queryReserveByUserId(Long syhUserId) {
+        return reserveMapper.queryReserveByUserId(syhUserId);
     }
 }
