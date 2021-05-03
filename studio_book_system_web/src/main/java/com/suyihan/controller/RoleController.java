@@ -151,7 +151,8 @@ public class RoleController {
     @RequestMapping(value = "/updateRoleStatusById",method = RequestMethod.POST)
 //    @RequiresPermissions("role:update")
     public Result updateRoleStatusById(@RequestBody Map<String,Object> map) {
-        Long roleId = (Long) map.get("roleId");
+        String roleIdStr = (String) map.get("roleId");
+        long roleId = Long.parseLong(roleIdStr);
         Integer roleHidden = (Integer) map.get("roleHidden");
         int i = roleService.updateRoleStatusById(roleId,roleHidden);
         if (i>0){
