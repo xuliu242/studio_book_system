@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -73,10 +74,11 @@ public class RoleMenuController {
     @RequestMapping(value = "/insertRoleMenu", method = RequestMethod.POST)
 //    @RequiresPermissions("role:assignMenu")
     public Result insertRoleMenu(@RequestBody Map<String, Object> map) {
-        Integer roleIdInt = (Integer) map.get("roleId");
-        Long roleId = roleIdInt.longValue();
-        List<Integer> menuIdsInt = (List<Integer>) map.get("menuIds");
-        List<Long> menuIds = JSONArray.parseArray(menuIdsInt.toString(),Long.class);
+        String roleIdInt = (String) map.get("roleId");
+        long roleId = Long.parseLong(roleIdInt);
+        List<String> menuIdsStr = (List<String>) map.get("menuIds");
+        List<Long> menuIds = menuIdsStr.stream().map(s -> Long.parseLong(s.trim())).collect(Collectors.toList());
+//        List<Long> menuIds = JSONArray.parseArray(menuIdsInt.toString(),Long.class);
         Boolean flag = roleMenuService.insertRoleMenu(roleId, menuIds);
         if (flag) {
             return Result.ok();

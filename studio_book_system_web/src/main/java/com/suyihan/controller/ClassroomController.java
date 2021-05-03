@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.suyihan.entity.Classroom;
+import com.suyihan.entity.QueryClassroomCondition;
 import com.suyihan.response.Result;
 import com.suyihan.service.ClassroomService;
 import io.swagger.annotations.Api;
@@ -66,20 +67,16 @@ public class ClassroomController {
 
     /**
      * 条件查询classroom
-     * @param map
+     * @param
      * @return
      */
     @ApiOperation(value = "条件查询classroom")
     @RequestMapping(value = "/queryClassroomCondition",method = RequestMethod.POST)
-    public Result queryClassroomCondition(@RequestBody Map<String,Object> map){
-        boolean updateClassroomSitNum = classroomService.updateClassroomSitNum();
-        if (!updateClassroomSitNum){
-            return Result.error().message("教室信息刷新失败");
-        }
-        String syhClassroomName = (String) map.get("syhClassroomName");
-        Integer syhClassroomType = (Integer) map.get("syhClassroomType");
-        Integer pageNum = (Integer) map.get("pageNum") ==null?1:(Integer) map.get("pageNum");
-        Integer pageSize = (Integer) map.get("pageSize") ==null?8:(Integer) map.get("pageSize");
+    public Result queryClassroomCondition(@RequestBody QueryClassroomCondition qcc){
+        String syhClassroomName = qcc.getSyhClassroomName();
+        Integer syhClassroomType = qcc.getSyhClassroomType();
+        Integer pageNum = qcc.getPageNum() ==null?1:qcc.getPageNum();
+        Integer pageSize = qcc.getPageSize()==null?8:qcc.getPageSize();
         QueryWrapper<Classroom> wrapper=new QueryWrapper();
         if (syhClassroomName!=null){
             wrapper.like("syh_classroom_name",syhClassroomName);
