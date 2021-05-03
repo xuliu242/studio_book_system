@@ -1,6 +1,7 @@
 package com.suyihan.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.suyihan.entity.Reserve;
 import com.suyihan.response.Result;
 import com.suyihan.service.ReserveService;
@@ -46,6 +47,13 @@ public class ReserveController {
         Integer valueId = (Integer) map.get("syhUserId");
         long syhUserId = valueId.longValue();
         // 手机传递的格式为 "yyyy-MM-ddTHH:mm:ss.SSSZ" "2021-04-29T21:36:36.555Z"
+        QueryWrapper<Reserve> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("syh_reserve_status",1);
+        queryWrapper.eq("syh_user_id",syhUserId);
+        List<Reserve> reserveList = reserveService.list(queryWrapper);
+        if (reserveList.size()>0){
+            return Result.error().message("当前用户已有预定信息进行中！！！");
+        }
         String endTime = (String) map.get("syhReserveEndTime");
         int t = endTime.indexOf("T");
         String substring1 = endTime.substring(0, t);

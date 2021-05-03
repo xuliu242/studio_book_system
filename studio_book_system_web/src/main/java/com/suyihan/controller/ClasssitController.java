@@ -56,11 +56,11 @@ public class ClasssitController {
     }
 
     /**
-     * 根据教室id查询座位信息
+     * 根据教室id查询座位信息 移动端
      * @param classroomId
      * @return
      */
-    @ApiOperation(value = "根据教室id查询座位信息")
+    @ApiOperation(value = "根据教室id查询座位信息 移动端")
     @RequestMapping(value = "/queryByClassroomId",method = RequestMethod.GET)
     public Result queryByClassroomId(Long classroomId){
         classroomService.queryClassroomAbleSits();
@@ -86,6 +86,19 @@ public class ClasssitController {
 
         return Result.ok().data("result",classsitList);
     }
+
+    /**
+     * web端 根据教室id查询工位
+     * @param classroomId
+     * @return
+     */
+    @ApiOperation(value = "web端 根据教室id查询工位")
+    @RequestMapping(value = "/querySitByClassRoomId",method = RequestMethod.GET)
+    public Result querySitByClassRoomId(Long classroomId){
+        List<Classsit> classsits = classsitService.querySitByClassRoomId(classroomId);
+        return Result.ok().data("result",classsits);
+    }
+
 
 
 //    @ApiOperation(value = "initClasssit")

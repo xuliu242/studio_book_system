@@ -36,5 +36,17 @@ public interface ClasssitMapper extends BaseMapper<Classsit> {
     @Update("update syh_classsit set syh_sit_status=#{syhSitStatus} where syh_sit_id=#{syhSitId}")
     Integer updateSitStatusById(@Param("syhSitId") Long syhSitId,@Param("syhSitStatus") Integer syhSitStatus);
 
+    /**
+     * web端 根据教室id查询工位
+     * @param classroomId
+     * @return
+     */
+    @Select("select sit.syh_sit_id,sit.syh_sit_name,sit.syh_sit_update_time,sit.syh_sit_status,sit.syh_classroom_id,room.syh_classroom_number\n" +
+            "from syh_classsit sit\n" +
+            "left join syh_classroom room on room.syh_classroom_id=sit.syh_classroom_id\n" +
+            " where sit.syh_classroom_id=#{classroomId}")
+    List<Classsit> querySitByClassRoomId(Long classroomId);
+
+
 
 }

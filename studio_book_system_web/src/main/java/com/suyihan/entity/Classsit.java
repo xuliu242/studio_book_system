@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Suyihan
@@ -32,6 +32,10 @@ public class Classsit implements Serializable {
 
     @ApiModelProperty(value = "教室id")
     private Long syhClassroomId;
+
+    @ApiModelProperty(value = "教室编号")
+    @TableField(exist = false)
+    private String syhClassroomNumber;
 
     @ApiModelProperty(value = "工位名称")
     private String syhSitName;
