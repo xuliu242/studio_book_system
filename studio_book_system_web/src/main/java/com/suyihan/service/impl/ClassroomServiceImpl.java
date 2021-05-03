@@ -64,7 +64,7 @@ public class ClassroomServiceImpl extends ServiceImpl<ClassroomMapper, Classroom
      * 1.查询预订失效的记录
      * 2.查询失效预订的座位id
      * 3.更新预订失效的结果和座位状态
-     * @return 
+     * @return
      */
     @Override
     public List<Classroom> queryClassroomAbleSits() {
@@ -83,19 +83,27 @@ public class ClassroomServiceImpl extends ServiceImpl<ClassroomMapper, Classroom
         // 1.查询预订失效的记录 并更新预订状态为2 过期
         List<Reserve> reserveList = reserveMapper.queryExpireSitIds();
         List<Long> expireSitIds=new ArrayList<>();
-        for (int i = 0; i < reserveList.size(); i++) {
-            expireSitIds.add(reserveList.get(i).getSyhSitId());
-            int updateReserveStatusById = reserveMapper.updateReserveStatusById(reserveList.get(i).getSyhReserveId(), 2);
-            if (updateReserveStatusById<=0){
-                return false;
+        //为空判断
+        if (reserveList!=null&&!reserveList.isEmpty()){
+            for (int i = 0; i < reserveList.size(); i++) {
+                int updateReserveStatusById = reserveMapper.updateReserveStatusById(reserveList.get(i).getSyhReserveId(), 2);
+                if (updateReserveStatusById<=0){
+                    return false;
+                }
+                expireSitIds.add(reserveList.get(i).getSyhSitId());
             }
         }
         // 2.查询失效预订的座位id 更新座位状态 为0 可用
-        List<Classsit> classsitList = classsitMapper.selectBatchIds(expireSitIds);
-        for (Classsit classsit:classsitList) {
-            Integer updateSitStatusById = classsitMapper.updateSitStatusById(classsit.getSyhSitId(), 0);
-            if (updateSitStatusById<=0){
-                return false;
+        if (expireSitIds!=null&&!expireSitIds.isEmpty()){
+            List<Classsit> classsitList = classsitMapper.selectBatchIds(expireSitIds);
+            if (classsitList!=null&&!classsitList.isEmpty()){
+                //为空判断
+                for (Classsit classsit:classsitList) {
+                    Integer updateSitStatusById = classsitMapper.updateSitStatusById(classsit.getSyhSitId(), 0);
+                    if (updateSitStatusById<=0){
+                        return false;
+                    }
+                }
             }
         }
         return true;

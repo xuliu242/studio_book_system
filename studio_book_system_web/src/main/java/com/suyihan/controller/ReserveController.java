@@ -58,6 +58,9 @@ public class ReserveController {
             return Result.error().message("时间选择错误");
         }
         List<Integer> sitIdList = (List<Integer>) map.get("syhSitIds");
+        if (sitIdList.size()>=3){
+            return Result.error().message("每位用户最多可以预定两个座位！！！");
+        }
         for (int i = 0; i < sitIdList.size(); i++) {
             //判断当前座位id是否被占用
             Reserve reserve=new Reserve();
@@ -73,7 +76,7 @@ public class ReserveController {
         }
         return Result.ok();
     }
-    @ApiOperation(value = "根据用户id查询预订信息信息")
+    @ApiOperation(value = "根据条件查询预订信息信息")
     @RequestMapping(value = "/queryReserveCondition",method = RequestMethod.POST)
     public Result queryReserveCondition(@RequestBody Map<String,Object> map){
 

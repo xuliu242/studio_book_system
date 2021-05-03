@@ -1,6 +1,7 @@
 package com.suyihan.controller;
 
 
+import com.alibaba.fastjson.JSONArray;
 import com.suyihan.entity.QueryUserRoleCondition;
 import com.suyihan.entity.UserRole;
 import com.suyihan.response.Result;
@@ -52,10 +53,12 @@ public class UserRoleController {
     }
     //添加用户所属角色数据
     @RequestMapping("/doAssignRoles")
-    @RequiresPermissions("user:assign")
+//    @RequiresPermissions("user:assign")
     public Result doAssignRoles(@RequestBody Map<String,Object> map){
-        Long userId = (Long) map.get("userId");
-        List<Long> roleIdsList = (List<Long>) map.get("roleIds");
+        String userIdStr = (String) map.get("userId");
+        long userId = Long.parseLong(userIdStr);
+        List<Integer> roleIdsListInt = (List<Integer>) map.get("roleIds");
+        List<Long> roleIdsList = JSONArray.parseArray(roleIdsListInt.toString(),Long.class);
         Long[] roleIds = roleIdsList.toArray(new Long[roleIdsList.size()]);
         Boolean flag = userRoleService.doAssignRoles(userId, roleIds);
         if (flag){

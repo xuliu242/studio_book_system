@@ -171,7 +171,8 @@ public class UserController {
 //    @RequiresPermissions("user:update")
     @ResponseBody
     public Result updateUserStatusById(@RequestBody Map<String,Object> map) {
-        Long userId = (Long) map.get("userId");
+        String userIdStr = (String) map.get("userId");
+        long userId = Long.parseLong(userIdStr);
         Integer userStatus = (Integer) map.get("userStatus");
         int i = userService.updateUserStatusById(userId, userStatus);
         if (i>0){

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -28,7 +29,8 @@ public class Menu implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "syh_menu_id", type = IdType.AUTO)
+    @TableId(value = "syh_menu_id", type = IdType.ID_WORKER)
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long syhMenuId;
 
     @ApiModelProperty(value = "菜单名")
@@ -38,6 +40,7 @@ public class Menu implements Serializable {
     private String syhMenuType;
 
     @ApiModelProperty(value = "父级菜单id")
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long syhMenuParentId;
 
     @ApiModelProperty(value = "菜单状态")

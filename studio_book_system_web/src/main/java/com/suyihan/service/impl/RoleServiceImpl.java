@@ -58,7 +58,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Override
     public int deleteRoleById(Long roleId) {
         List<Long> userIds = userRoleMapper.selectUserIds(roleId);
-        if (userIds!=null){
+        if (userIds.size()>0){
             throw new BusinessException(ResultCode.ROLE_ASSIGNED_USER_EXCEPTION.getCode(), "角色已分配给用户");
         }
         return roleMapper.deleteRoleById(roleId);

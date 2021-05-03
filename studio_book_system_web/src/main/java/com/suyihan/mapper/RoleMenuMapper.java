@@ -36,7 +36,7 @@ public interface RoleMenuMapper extends BaseMapper<RoleMenu> {
 
     //根据角色id查找权限信息
     @Select("SELECT * from syh_menu where syh_menu_id in \n" +
-            "(SELECT MENU_ID FROM syh_role_menu where syh_role_id = #{roleId})\n")
+            "(SELECT syh_menu_id FROM syh_role_menu where syh_role_id = #{roleId})\n")
     List<Menu> selectByRoleId(Long roleId);
 
     //根据用户id 查询菜单列表
