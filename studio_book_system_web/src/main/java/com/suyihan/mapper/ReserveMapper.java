@@ -1,5 +1,6 @@
 package com.suyihan.mapper;
 
+import com.suyihan.entity.QueryReserveCondition;
 import com.suyihan.entity.Reserve;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -34,7 +35,7 @@ public interface ReserveMapper extends BaseMapper<Reserve> {
     @Update("update syh_reserve set syh_reserve_status=#{syhReserveStatus} where syh_reserve_id=#{syhReserveId}")
     int updateReserveStatusById(@Param("syhReserveId") Long syhReserveId,@Param("syhReserveStatus") Integer syhReserveStatus);
 
-    List<Reserve> queryReserveCondition();
+    List<Reserve> queryReserveCondition(QueryReserveCondition qrc);
 
     /**
      * 根据用户id查询预定信息
@@ -47,7 +48,10 @@ public interface ReserveMapper extends BaseMapper<Reserve> {
             "left join syh_user u on u.syh_user_id=rs.syh_user_id\n" +
             "left join syh_classsit sit on sit.syh_sit_id=rs.syh_sit_id\n" +
             "left join syh_classroom room on room.syh_classroom_id=sit.syh_classroom_id\n" +
-            "where rs.syh_user_id=#{syhUserId};\n")
+            "where rs.syh_user_id=#{syhUserId} ORDER BY rs.syh_reserve_start_time desc;\n")
     List<Reserve> queryReserveByUserId(Long syhUserId);
+
+
+
 
 }

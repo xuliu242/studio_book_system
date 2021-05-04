@@ -2,21 +2,24 @@ package com.suyihan.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.suyihan.entity.Classroom;
 import com.suyihan.entity.Classsit;
+import com.suyihan.entity.QueryClasssitCondition;
 import com.suyihan.response.Result;
 import com.suyihan.service.ClassroomService;
 import com.suyihan.service.ClasssitService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -37,8 +40,10 @@ public class ClasssitController {
 
     @ApiOperation(value = "saveOrUpdateClasssit")
     @RequestMapping(value = "/saveOrUpdateClasssit",method = RequestMethod.POST)
-    public Result saveOrUpdateClasssit(Classsit classsit){
+    public Result saveOrUpdateClasssit(@RequestBody Classsit classsit){
+        classsit.setSyhSitUpdateTime(new Date());
         boolean b = classsitService.saveOrUpdate(classsit);
+        boolean updateClassroomSitNum = classroomService.updateClassroomSitNum();
         if (b){
             return Result.ok();
         }
@@ -88,15 +93,27 @@ public class ClasssitController {
     }
 
     /**
-     * web端 根据教室id查询工位
-     * @param classroomId
+     * web端 根据条件查询工位
+     * @param
      * @return
      */
-    @ApiOperation(value = "web端 根据教室id查询工位")
-    @RequestMapping(value = "/querySitByClassRoomId",method = RequestMethod.GET)
-    public Result querySitByClassRoomId(Long classroomId){
-        List<Classsit> classsits = classsitService.querySitByClassRoomId(classroomId);
-        return Result.ok().data("result",classsits);
+    @ApiOperation(value = "web端 根据条件查询工位")
+    @RequestMapping(value = "/querySitByClasssitByCondition",method = RequestMethod.POST)
+    public Result querySitByClassRoomId(@RequestBody QueryClasssitCondition qcc){
+        Integer pageNum = qcc.getPageNum() ==null?1:qcc.getPageNum();
+        Integer pageSize = qcc.getPageSize()==null?10:qcc.getPageSize();
+        Long syhClassroomId = qcc.getSyhClassroomId();
+        String syhClasssitName = qcc.getSyhClasssitName();
+        List<Classsit> classsits=new ArrayList<>();
+        Long total=null;
+        if ("".equals(syhClasssitName)){
+            qcc.setSyhClasssitName(null);
+        }
+        PageHelper.startPage(pageNum,pageSize);
+        PageInfo pageInfo=new PageInfo(classsitService.querySitByCondition(qcc));
+        classsits=pageInfo.getList();
+        total=pageInfo.getTotal();
+        return Result.ok().data("result",classsits).data("total",total);
     }
 
 

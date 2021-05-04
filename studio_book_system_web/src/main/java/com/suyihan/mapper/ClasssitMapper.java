@@ -3,6 +3,7 @@ package com.suyihan.mapper;
 import com.suyihan.entity.Classroom;
 import com.suyihan.entity.Classsit;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.suyihan.entity.QueryClasssitCondition;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -46,6 +47,8 @@ public interface ClasssitMapper extends BaseMapper<Classsit> {
             "left join syh_classroom room on room.syh_classroom_id=sit.syh_classroom_id\n" +
             " where sit.syh_classroom_id=#{classroomId}")
     List<Classsit> querySitByClassRoomId(Long classroomId);
+
+    List<Classsit> querySitByCondition(QueryClasssitCondition qcc);
 
 
 

@@ -17,7 +17,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Suyihan
@@ -56,6 +56,12 @@ public class Reserve implements Serializable {
      */
     @TableField(exist = false)
     private String syhUserName;
+    /**
+     * 账号
+     */
+    @ApiModelProperty(value = "账号")
+    @TableField(exist = false)
+    private Integer syhUserNumber;
     /**
      * 教室编号
      */

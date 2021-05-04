@@ -2,5 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.suyihan.mapper.ReserveMapper">
 
-    <select id="queryReserveCondition" resultType="com.suyihan.entity.Reserve"></select>
+    <select id="queryReserveCondition" resultType="com.suyihan.entity.Reserve"
+            parameterType="com.suyihan.entity.QueryReserveCondition">
+        select rs.syh_reserve_id,rs.syh_user_id,rs.syh_sit_id,rs.syh_reserve_start_time,
+        rs.syh_reserve_end_time,rs.syh_reserve_status,u.syh_user_name,u.syh_user_number,syh_classroom_number,
+        sit.syh_sit_name from syh_reserve rs
+        left join syh_user u on u.syh_user_id=rs.syh_user_id
+        left join syh_classsit sit on sit.syh_sit_id=rs.syh_sit_id
+        left join syh_classroom room on room.syh_classroom_id=sit.syh_classroom_id
+        where 1=1
+        <if test="syhUserName!=null and syhUserName !=''">
+            and u.syh_user_name like concat('%',concat(#{syhUserName},'%'))
+        </if>
+        <if test="syhSitName!=null and syhSitName !=''">
+            and sit.syh_sit_name = #{syhSitName}
+        </if>
+        ORDER BY rs.syh_reserve_start_time desc
+    </select>
 </mapper>

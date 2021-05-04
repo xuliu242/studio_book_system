@@ -2,6 +2,9 @@ package com.suyihan.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.suyihan.entity.QueryReserveCondition;
 import com.suyihan.entity.Reserve;
 import com.suyihan.response.Result;
 import com.suyihan.service.ReserveService;
@@ -19,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * <p>
@@ -44,8 +48,8 @@ public class ReserveController {
     @ApiOperation(value = "新增预订信息信息")
     @RequestMapping(value = "/addReserve",method = RequestMethod.POST)
     public Result addReserve(@RequestBody Map<String,Object> map) throws ParseException {
-        Integer valueId = (Integer) map.get("syhUserId");
-        long syhUserId = valueId.longValue();
+        String valueId = (String) map.get("syhUserId");
+        long syhUserId = Long.parseLong(valueId);
         // 手机传递的格式为 "yyyy-MM-ddTHH:mm:ss.SSSZ" "2021-04-29T21:36:36.555Z"
         QueryWrapper<Reserve> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("syh_reserve_status",1);
@@ -60,7 +64,10 @@ public class ReserveController {
         String substring2 = endTime.substring(t + 1, endTime.indexOf("."));
         endTime=substring1+" "+substring2;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");;
+        format.setTimeZone(TimeZone.getTimeZone("GMT+8"));
         Date syhReserveEndTime=format.parse(endTime);
+        syhReserveEndTime.setTime(syhReserveEndTime.getTime()+8*60*60*1000);
+
         Date startTime = new Date();
         if (startTime.getTime()>syhReserveEndTime.getTime()){
             return Result.error().message("时间选择错误");
@@ -68,6 +75,8 @@ public class ReserveController {
         List<Integer> sitIdList = (List<Integer>) map.get("syhSitIds");
         if (sitIdList.size()>=3){
             return Result.error().message("每位用户最多可以预定两个座位！！！");
+        }else if(sitIdList.size()==0||sitIdList.isEmpty()){
+            return Result.error().message("请选择座位！！！");
         }
         for (int i = 0; i < sitIdList.size(); i++) {
             //判断当前座位id是否被占用
@@ -86,9 +95,14 @@ public class ReserveController {
     }
     @ApiOperation(value = "根据条件查询预订信息信息")
     @RequestMapping(value = "/queryReserveCondition",method = RequestMethod.POST)
-    public Result queryReserveCondition(@RequestBody Map<String,Object> map){
-
-        return Result.error();
+    public Result queryReserveCondition(@RequestBody QueryReserveCondition qrc){
+        Integer pageNum = qrc.getPageNum() ==null?1:qrc.getPageNum();
+        Integer pageSize = qrc.getPageSize()==null?10:qrc.getPageSize();
+        PageHelper.startPage(pageNum,pageSize);
+        PageInfo<Reserve> pageInfo=new PageInfo(reserveService.queryReserveCondition(qrc));
+        List<Reserve> reserveList = pageInfo.getList();
+        long total = pageInfo.getTotal();
+        return Result.ok().data("result",reserveList).data("total",total);
     }
 
 
@@ -97,6 +111,16 @@ public class ReserveController {
     public Result queryReserve(Long syhUserId){
         List<Reserve> reserveList = reserveService.queryReserveByUserId(syhUserId);
         return Result.ok().data("result",reserveList);
+    }
+
+    @ApiOperation(value = "deleteReserve")
+    @RequestMapping(value = "/deleteReserve",method = RequestMethod.GET)
+    public Result deleteReserve(Long reserveId){
+        boolean b = reserveService.removeById(reserveId);
+        if (b){
+            return Result.ok();
+        }
+        return Result.error();
     }
 
 

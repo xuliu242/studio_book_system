@@ -1,5 +1,6 @@
 package com.suyihan.service.impl;
 
+import com.suyihan.entity.QueryReserveCondition;
 import com.suyihan.entity.Reserve;
 import com.suyihan.mapper.ClasssitMapper;
 import com.suyihan.mapper.ReserveMapper;
@@ -43,5 +44,15 @@ public class ReserveServiceImpl extends ServiceImpl<ReserveMapper, Reserve> impl
     @Override
     public List<Reserve> queryReserveByUserId(Long syhUserId) {
         return reserveMapper.queryReserveByUserId(syhUserId);
+    }
+
+    /**
+     * 条件查询
+     * @param qrc
+     * @return
+     */
+    @Override
+    public List<Reserve> queryReserveCondition(QueryReserveCondition qrc) {
+        return reserveMapper.queryReserveCondition(qrc);
     }
 }

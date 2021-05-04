@@ -1,5 +1,6 @@
 package com.suyihan.service;
 
+import com.suyihan.entity.QueryReserveCondition;
 import com.suyihan.entity.Reserve;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -22,4 +23,12 @@ public interface ReserveService extends IService<Reserve> {
      * @return
      */
     List<Reserve> queryReserveByUserId(Long syhUserId);
+
+    /**
+     * 条件查询
+     * @param qrc
+     * @return
+     */
+    List<Reserve> queryReserveCondition(QueryReserveCondition qrc);
+
 }

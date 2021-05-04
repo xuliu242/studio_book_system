@@ -9,10 +9,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @NoArgsConstructor
-public class QueryReserveCondition {
-    private String syhUserName; //用户姓名
-    private String syhSitName;  //座位名
+public class QueryClasssitCondition {
+    private String syhClasssitName;    //教室名
+    private Long syhClassroomId;  //教室id
     private Integer pageSize;   //当前页数据最大条数
     private Integer pageNum;     //当前页码
-
 }

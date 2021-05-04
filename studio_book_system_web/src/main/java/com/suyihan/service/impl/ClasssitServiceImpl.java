@@ -1,6 +1,7 @@
 package com.suyihan.service.impl;
 
 import com.suyihan.entity.Classsit;
+import com.suyihan.entity.QueryClasssitCondition;
 import com.suyihan.mapper.ClasssitMapper;
 import com.suyihan.service.ClasssitService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -29,5 +30,10 @@ public class ClasssitServiceImpl extends ServiceImpl<ClasssitMapper, Classsit> i
     @Override
     public List<Classsit> querySitByClassRoomId(Long ClassroomId) {
         return classsitMapper.querySitByClassRoomId(ClassroomId);
+    }
+
+    @Override
+    public List<Classsit> querySitByCondition(QueryClasssitCondition qcc) {
+        return classsitMapper.querySitByCondition(qcc);
     }
 }

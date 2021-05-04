@@ -2,6 +2,7 @@ package com.suyihan.service;
 
 import com.suyihan.entity.Classsit;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.suyihan.entity.QueryClasssitCondition;
 
 import java.util.List;
 
@@ -20,5 +21,7 @@ public interface ClasssitService extends IService<Classsit> {
      * @return
      */
     List<Classsit> querySitByClassRoomId(Long ClassroomId);
+
+    List<Classsit> querySitByCondition(QueryClasssitCondition qcc);
 
 }
