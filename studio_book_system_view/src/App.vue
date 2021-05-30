@@ -1,65 +1,50 @@
 <template>
-  <el-container>
-    <el-header>
-      <Header>
-        <img slot="logo" src="../static/logo.png" alt="" />
-        <span slot="logo-text">开放式工作室预定系统</span>
-      </Header>
-    </el-header>
-    <el-container>
-      <el-aside width="200px">
-        <Aside></Aside>
-      </el-aside>
-      <el-main>
-        <Main></Main>
-      </el-main>
-    </el-container>
-  </el-container>
+  <div id="app">
+    <!--    <div id="nav">-->
+    <!--      <router-link to="/">Home</router-link> |-->
+    <!--      <router-link to="/login">login</router-link>-->
+    <!--    </div>-->
+
+    <router-view />
+  </div>
 </template>
 <script>
-import Header from "./components/Header/Header";
-import Aside from "./components/Aside/Aside";
-import Main from "./components/Main/Main";
 export default {
-  name: "App",
-  components: {
-    Header,
-    Aside,
-    Main
+  data() {
+    return {
+      locale: "zhCN"
+    };
+  },
+  mounted() {
+    // this.$router.push("/login")
+    if (sessionStorage.getItem("UserLoginName")) {
+      console.log("sessionStorage.getItem true");
+    } else {
+      console.log("sessionStorage.getItem false");
+      this.$router.push("/login");
+    }
   }
 };
 </script>
-
 <style>
-.el-header {
-  background-color: rgba(29, 27, 27, 0.87);
-  color: #333;
-  text-align: center;
-  line-height: 60px;
-  /* 去两侧内边距 */
-  padding: 0;
-}
-.el-header span {
-  color: #fff;
-  font-size: 20px;
-}
+/*#app {*/
+/*  font-family: Avenir, Helvetica, Arial, sans-serif;*/
+/*  -webkit-font-smoothing: antialiased;*/
+/*  -moz-osx-font-smoothing: grayscale;*/
+/*  text-align: center;*/
+/*  color: #2c3e50;*/
+/*}*/
 
-.el-aside {
-  background-color: rgba(29, 27, 27, 0.87);
-  color: #333;
-  text-align: center;
-  line-height: 200px;
-}
+/*#nav {*/
+/*  padding: 30px;*/
+/*}*/
 
-.el-main {
-  background-color: #e9eef3;
-  color: #333;
-  text-align: center;
-  line-height: 160px;
-}
+/*#nav a {*/
+/*  font-weight: bold;*/
+/*  color: #2c3e50;*/
+/*}*/
 
-body > .el-container {
-  margin-bottom: 40px;
-  height: 100%;
-}
+/*#nav a.router-link-exact-active {*/
+/*  color: #42b983;*/
+/*}*/
 </style>
