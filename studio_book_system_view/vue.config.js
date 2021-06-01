@@ -9,8 +9,8 @@ module.exports = {
     // open: true, //配置自动启动浏览器
     proxy: {
       "/studio": {
-        target: "http://127.0.0.1:8088/", //对应自己的接口
-        // target: 'http://123.56.235.185:8088',
+        // target: "http://127.0.0.1:8088/", //对应自己的接口
+        target: 'https://app.liujhlx.top',
         changeOrigin: true,
         ws: true
         // pathRewrite: {

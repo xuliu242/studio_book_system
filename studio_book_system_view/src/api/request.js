@@ -3,7 +3,7 @@ import axios from "axios";
 //创建单例
 const instance = axios.create({
   // baseURL: "http://127.0.0.1:8088/studio",
-  baseURL: "http://123.56.235.185:8088/studio",
+  baseURL: "https://app.liujhlx.top/studio",
   timeout: 5000
 });
 
