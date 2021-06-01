@@ -171,7 +171,8 @@ public class UserController {
 //    @RequiresPermissions("user:update")
     @ResponseBody
     public Result updateUserStatusById(@RequestBody Map<String,Object> map) {
-        Long userId = (Long) map.get("userId");
+        String userIdStr = (String) map.get("userId");
+        long userId = Long.parseLong(userIdStr);
         Integer userStatus = (Integer) map.get("userStatus");
         int i = userService.updateUserStatusById(userId, userStatus);
         if (i>0){
@@ -194,6 +195,22 @@ public class UserController {
         }
         return Result.ok();
     }
-
+    //    根据用户ID更新用户信息/移动端
+    @RequestMapping("/mUpdateUserById")
+    @ResponseBody
+    public Result mUpdateUserById(@RequestBody User user) {
+        User userServiceById = userService.getById(user.getSyhUserId());
+        user.setSyhUserNumber(userServiceById.getSyhUserNumber());
+        user.setSyhPassword(userServiceById.getSyhPassword());
+        user.setSyhRegisterTime(userServiceById.getSyhRegisterTime());
+        if (user.getSyhSex()==2){
+            user.setSyhSex(0);
+        }
+        int i = userService.updateUserById(user);
+        if (i>0){
+            return Result.ok();
+        }
+        return Result.error();
+    }
 }
 

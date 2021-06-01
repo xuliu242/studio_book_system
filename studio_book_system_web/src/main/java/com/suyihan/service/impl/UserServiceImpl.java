@@ -40,7 +40,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public User selectByUserId(Long userId) {
-        return null;
+        return userMapper.selectByUserId(userId);
     }
 
     @Override

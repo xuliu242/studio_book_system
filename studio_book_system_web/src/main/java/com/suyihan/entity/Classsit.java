@@ -1,5 +1,6 @@
 package com.suyihan.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
@@ -12,7 +13,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Suyihan
@@ -32,14 +33,34 @@ public class Classsit implements Serializable {
     @ApiModelProperty(value = "教室id")
     private Long syhClassroomId;
 
+    @ApiModelProperty(value = "教室编号")
+    @TableField(exist = false)
+    private String syhClassroomNumber;
+
     @ApiModelProperty(value = "工位名称")
     private String syhSitName;
 
-    @ApiModelProperty(value = "预定状态(1可用，0不可用)")
+    @ApiModelProperty(value = "预定状态(0可用，1不可用)")
     private Integer syhSitStatus;
 
     @ApiModelProperty(value = "添加时间")
     private Date syhSitUpdateTime;
+
+    @ApiModelProperty(value = "行数")
+    @TableField(exist = false)
+    private Integer rowNum;
+
+    @ApiModelProperty(value = "列数")
+    @TableField(exist = false)
+    private Integer columnNum;
+
+    @ApiModelProperty(value = "纵坐标")
+    @TableField(exist = false)
+    private Integer yCoord;
+
+    @ApiModelProperty(value = "横坐标")
+    @TableField(exist = false)
+    private Integer xCoord;
 
 
 }

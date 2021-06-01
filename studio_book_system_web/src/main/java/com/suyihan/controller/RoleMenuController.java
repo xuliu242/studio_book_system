@@ -1,6 +1,7 @@
 package com.suyihan.controller;
 
 
+import com.alibaba.fastjson.JSONArray;
 import com.suyihan.entity.Menu;
 import com.suyihan.response.Result;
 import com.suyihan.service.MenuService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -72,8 +74,11 @@ public class RoleMenuController {
     @RequestMapping(value = "/insertRoleMenu", method = RequestMethod.POST)
 //    @RequiresPermissions("role:assignMenu")
     public Result insertRoleMenu(@RequestBody Map<String, Object> map) {
-        Long roleId = (Long) map.get("roleId");
-        List<Long> menuIds = (List<Long>) map.get("menuIds");
+        String roleIdInt = (String) map.get("roleId");
+        long roleId = Long.parseLong(roleIdInt);
+        List<String> menuIdsStr = (List<String>) map.get("menuIds");
+        List<Long> menuIds = menuIdsStr.stream().map(s -> Long.parseLong(s.trim())).collect(Collectors.toList());
+//        List<Long> menuIds = JSONArray.parseArray(menuIdsInt.toString(),Long.class);
         Boolean flag = roleMenuService.insertRoleMenu(roleId, menuIds);
         if (flag) {
             return Result.ok();
@@ -104,9 +109,9 @@ public class RoleMenuController {
     @RequestMapping(value = "/selectByRoleId", method = RequestMethod.POST)
     public Result selectByRoleId(@RequestBody Long roleId) {
         List<Menu> menuByRoleIdList = roleMenuService.selectByRoleId(roleId);
-        List<Long> menuIds = new ArrayList<>();
+        List<String> menuIds = new ArrayList<>();
         for (Menu menu : menuByRoleIdList) {
-            menuIds.add(menu.getSyhMenuId());
+            menuIds.add(menu.getSyhMenuId().toString());
         }
         List<Menu> menuList = menuService.selectMenuByCondition(null);
         return Result.ok().data("menuList", menuList).data("menuIds", menuIds);

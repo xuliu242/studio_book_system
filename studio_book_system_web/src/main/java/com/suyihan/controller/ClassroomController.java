@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.suyihan.entity.Classroom;
+import com.suyihan.entity.QueryClassroomCondition;
 import com.suyihan.response.Result;
 import com.suyihan.service.ClassroomService;
 import io.swagger.annotations.Api;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -39,7 +41,7 @@ public class ClassroomController {
      * @return
      */
     @ApiOperation(value = "saveOrUpdateClassroom")
-    @RequestMapping("/saveOrUpdateClassroom")
+    @RequestMapping(value = "/saveOrUpdateClassroom",method = RequestMethod.POST)
     public Result addClassroom(@RequestBody Classroom classroom){
         boolean b = classroomService.saveOrUpdate(classroom);
         if (b){
@@ -54,7 +56,7 @@ public class ClassroomController {
      * @return
      */
     @ApiOperation(value = "deleteClassroom")
-    @RequestMapping("/deleteClassroom")
+    @RequestMapping(value = "/deleteClassroom",method = RequestMethod.GET)
     public Result deleteClassroom(Long classroomId){
         boolean b = classroomService.removeById(classroomId);
         if (b){
@@ -65,20 +67,16 @@ public class ClassroomController {
 
     /**
      * 条件查询classroom
-     * @param map
+     * @param
      * @return
      */
     @ApiOperation(value = "条件查询classroom")
-    @RequestMapping("/queryClassroomCondition")
-    public Result queryClassroomCondition(@RequestBody Map<String,Object> map){
-        boolean updateClassroomSitNum = classroomService.updateClassroomSitNum();
-        if (!updateClassroomSitNum){
-            return Result.error().message("教室信息刷新失败");
-        }
-        String syhClassroomName = (String) map.get("syhClassroomName");
-        Integer syhClassroomType = (Integer) map.get("syhClassroomType");
-        Integer pageNum = (Integer) map.get("pageNum") ==null?1:(Integer) map.get("pageNum");
-        Integer pageSize = (Integer) map.get("pageSize") ==null?8:(Integer) map.get("pageSize");
+    @RequestMapping(value = "/queryClassroomCondition",method = RequestMethod.POST)
+    public Result queryClassroomCondition(@RequestBody QueryClassroomCondition qcc){
+        String syhClassroomName = qcc.getSyhClassroomName();
+        Integer syhClassroomType = qcc.getSyhClassroomType();
+        Integer pageNum = qcc.getPageNum() ==null?1:qcc.getPageNum();
+        Integer pageSize = qcc.getPageSize()==null?8:qcc.getPageSize();
         QueryWrapper<Classroom> wrapper=new QueryWrapper();
         if (syhClassroomName!=null){
             wrapper.like("syh_classroom_name",syhClassroomName);
@@ -92,6 +90,21 @@ public class ClassroomController {
         return Result.ok().data("result",classroomList).data("total",total);
     }
 
+    /**
+     * 查询教室可用座位数量
+     * @return
+     */
+    @ApiOperation(value = "查询教室可用座位数量")
+    @RequestMapping(value = "/queryClassroomAbleSits",method = RequestMethod.POST)
+    public Result queryClassroomAbleSits(){
+
+        List<Classroom> classroomList = classroomService.queryClassroomAbleSits();
+        if (classroomList==null){
+            return Result.error();
+        }
+
+        return Result.ok().data("result",classroomList);
+    }
 
 
 }

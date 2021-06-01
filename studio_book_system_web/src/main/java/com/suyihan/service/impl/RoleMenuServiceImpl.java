@@ -87,7 +87,10 @@ public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> i
         for (Menu firstMenu:menuList){
             List<Menu> secMenuList=new ArrayList<>();
             for (Menu menu:menuAll ){
-                if (menu.getSyhMenuParentId()==firstMenu.getSyhMenuId()){
+                if (menu.getSyhMenuParentId()==null){
+                    continue;
+                }
+                if (menu.getSyhMenuParentId().equals(firstMenu.getSyhMenuId())){
                     secMenuList.add(menu);
                 }
             }

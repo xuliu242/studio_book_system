@@ -3,6 +3,9 @@ package com.suyihan.mapper;
 import com.suyihan.entity.Classroom;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * <p>
