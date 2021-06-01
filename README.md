@@ -33,16 +33,16 @@ SpringBoot, Shiro ,Swagger-UI,MyBatis-Plus,JWT,MySQL,Vue.js+element-ui,Nginx,Nod
 
 - 人员管理
 
-![2](README.assets/studio_user.jpg)
+![2](https://suyihan.oss-cn-beijing.aliyuncs.com/studio/studio_user.jpg)
 
 
 - 权限树
 
-![5](README.assets/studio_menu.jpg)
+![5](https://suyihan.oss-cn-beijing.aliyuncs.com/studio/studio_menu.jpg)
 
 - 角色分配
 
-![6](README.assets/studio_assign.jpg)
+![6](https://suyihan.oss-cn-beijing.aliyuncs.com/studio/studio_assign.jpg)
 
 
 ### 联系作者
