@@ -5,7 +5,7 @@
 ![https://img.shields.io/badge/springboot-2.2.1-yellow.svg?style=flat-square](https://img.shields.io/badge/springboot-2.3.7-yellow.svg?style=flat-square)
 ![https://img.shields.io/badge/shiro-1.4.2-orange.svg?longCache=true&style=flat-square](https://img.shields.io/badge/shiro-1.3.2-orange.svg?longCache=true&style=flat-square)
 
-[后台管理项目](https://github.com/zykzhangyukang/Xinguan "后端项目")
+[后台管理项目](https://github.com/xuliu242/studio_book_system "后端项目")
 [移动端uni-app项目](https://gitee.com/xuliu242/studio_book_uniapp "前端项目")
 
 #### 简单介绍
