@@ -47,7 +47,7 @@ SpringBoot, Shiro ,Swagger-UI,MyBatis-Plus,JWT,MySQL,Vue.js+element-ui,Nginx,Nod
 ### 联系作者
 - 作者QQ
 
-1624742953
+1624741953
 
 ### 打赏作者
 
